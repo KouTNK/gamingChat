@@ -1,4 +1,10 @@
+import { border, borderStyle, findBorderButton, moveFromTop1, moveFromTop2, moveFromTop3, moveFromMiddle1, moveFromMiddle2, moveFromMiddle3, moveFromBottom1, moveFromBottom2, moveFromBottom3 } from '../modules/border.mjs'
+import { receiveTextEvent, submitTextEvent, getP_ID, createChatText } from '../modules/chat.mjs'
 const socket = io.connect(`http://${location.host}/chat_app/chat`)
+//ボタンの配置
+//top1,top2,top3
+//mid1,mid2,mid3
+//bot1,bot2,bot3
 const buttons = {
     top1: document.getElementById('top1'),
     top2: document.getElementById('top2'),
@@ -22,76 +28,80 @@ const buttonsPotision = {
     bottom2: 'bottom2',
     bottom3: 'bottom3',
 }
-const borderStyle = {
-    solid: 'solid',
-    none: 'none'
-}
 let tmpKeydown = []
-let p_id = 0
 let username
 window.addEventListener('load', () => {
     socket.emit('check your connection')
     border(buttons.middle2, borderStyle.solid)
 })
+function clickEvent(tag, currentID, newID, text, element, username) {
+    const chatText = createChatText(username, text)
+    submitTextEvent(tag, newID, chatText, element)
+    socket.emit('submit text', { tag, currentID, newID, chatText })
+}
+//エンターキーを押すとonclickのイベントも発動してしまうため、
+//エンターキーの場合はclickEventが発動しないようにした。
+//もっといい書き方があるかもしれないので、今後調べる。
+function cancelKeydownEvent(tmpKeydown) {
+    return tmpKeydown.length !== 0
+}
 buttons.top1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.top2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.top3.onclick = (event) => {
-    console.log('abcd', tmpKeydown)
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.middle1.onclick = (event) => {
-    console.log('abcd', tmpKeydown)
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.middle2.onclick = (event) => {
-    console.log('abcd', tmpKeydown)
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.middle3.onclick = (event) => {
-    console.log('abcd', tmpKeydown)
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.bottom1.onclick = (event) => {
-    console.log('abcd', tmpKeydown)
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.bottom2.onclick = (event) => {
-    console.log('abcd', tmpKeydown)
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 buttons.bottom3.onclick = (event) => {
-    console.log('abcd', tmpKeydown)
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${p_id - 1}`, `p${p_id}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
 }
 let isSubmit = true
 window.addEventListener('keyup', event => {
+    //エンターキーを押してすぐ離した場合のみclickEventを発動する。
+    //エンターキーを長押しした場合、間違って押した可能性があり、clickEventを発動しないようにした。
+    //他のキーと同時押しでエンターキーを押した場合も間違いの可能性があるため、clickEventを発動しないようにした。
     if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit) {
         const position = findBorderButton(buttons, borderStyle.solid)
-        clickEvent('p', `p${p_id - 1}`, `p${p_id}`, buttons[position].value, chat, username)
-        chat.style.backgroundColor = 'rgb(30,30,200)'
-        setTimeout(function () {
-            chat.style.backgroundColor = 'rgb(30, 30, 30)'
-        }, 100)
+        clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, buttons[position].value, chat, username)
     }
+    //キーを離した時、離したキーを配列から削除する。
     tmpKeydown = tmpKeydown.filter(key => key !== event.key)
+
+    //押しているキーがなくなった場合、次にエンターキーを押してすぐ離した場合に送信できるようにする。
     if (tmpKeydown.length === 0) isSubmit = true
 })
 window.addEventListener('keydown', event => {
+    //エンターキーを長押しで押した場合、間違って押した可能性があるため、送信イベントを発動しないようする。
     if (event.key === 'Enter' && isDuplicateKey(tmpKeydown, event)) isSubmit = false
+    //他のキーが入力された際にtmpKeydown配列に記憶させるようにした。長押しの場合、keydownイベントが連続で発生するため、記憶しないようにした。
     if (!isDuplicateKey(tmpKeydown, event)) tmpKeydown.push(event.key)
+    //エンターキー以外のキーを長押ししている時、送信できないようにする。
     if (event.key !== 'Enter') isSubmit = false
     const position = findBorderButton(buttons, borderStyle.solid)
     if (position === buttonsPotision.top1) moveFromTop1(buttons, event, tmpKeydown)
@@ -104,480 +114,26 @@ window.addEventListener('keydown', event => {
     else if (position === buttonsPotision.bottom2) moveFromBottom2(buttons, event, tmpKeydown)
     else if (position === buttonsPotision.bottom3) moveFromBottom3(buttons, event, tmpKeydown)
 })
-socket.on('success connection', function (rec) {
-    console.log(rec)
-    username = rec.id
-})
-socket.on('receive text', function (rec) {
-    console.log(rec)
-    receiveTextEvent(rec.tag, rec.currentID, rec.newID, rec.chatText, chat)
-    chat.style.backgroundColor = 'rgb(200,30,30)'
-        setTimeout(function () {
-            chat.style.backgroundColor = 'rgb(30, 30, 30)'
-        }, 100)
-})
 function isDuplicateKey(tmpKeydown, event) {
     for (const key of tmpKeydown) {
         if (key === event.key) return true
     }
     return false
 }
-function cancelKeydownEvent(tmpKeydown) {
-    return tmpKeydown.length !== 0
-}
-function clickEvent(tag, currentID, newID, text, element, username) {
-    const chatText = `${username}: ${text}`
-    appendText(tag, currentID, newID, chatText, element)
-    socket.emit('submit text', { tag, currentID, newID, chatText })
-    p_id++
-}
-function receiveTextEvent(tag, currentID, newID, text, element) {
-    appendText(tag, currentID, newID, text, element)
-    p_id++
-}
-function appendText(tag, currentID, newID, text, element) {
-    const newTag = document.createElement(tag)
-    const currentTag = document.getElementById(currentID)
-    newTag.id = newID
-    newTag.innerText = text
-    element.prepend(newTag)
-}
-function border(element, style) {
-    element.style.borderStyle = style
-}
-function getBorderStyle(element) {
-    return element.style.borderStyle
-}
-function findBorderButton(obj, borderStyle) {
-    for (let element in obj) {
-        if (borderStyle === getBorderStyle(obj[element])) return element
-    }
-}
-function pressKeyAndOtherKey(tmpKeydown, key, otherKey) {
-    return tmpKeydown[0] === key && tmpKeydown[1] === otherKey || tmpKeydown[0] === otherKey && tmpKeydown[1] === key
-}
-function moveFromTop1(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            border(buttons.top1, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.top1, borderStyle.none)
-            border(buttons.top2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.top1, borderStyle.none)
-            border(buttons.bottom3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            return
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            border(buttons.top1, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            return
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                border(buttons.top1, borderStyle.none)
-                border(buttons.middle1, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowRight') {
-                border(buttons.top1, borderStyle.none)
-                border(buttons.top2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowLeft') {
-                return
-            }
-            else if (event.key === 'ArrowUp') {
-                return
-            }
-            else return
-        }
-    }
-}
-function moveFromTop2(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            border(buttons.top2, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.top2, borderStyle.none)
-            border(buttons.top3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.top2, borderStyle.none)
-            border(buttons.top1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            return
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            border(buttons.top2, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            return
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                border(buttons.top2, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowRight') {
-                border(buttons.top2, borderStyle.none)
-                border(buttons.top3, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowLeft') {
-                border(buttons.top2, borderStyle.none)
-                border(buttons.top1, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowUp') {
-                return
-            }
-            else return
-        }
-    }
-}
-function moveFromTop3(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            border(buttons.top3, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.top3, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.top3, borderStyle.none)
-            border(buttons.top2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            return
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            border(buttons.top3, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            return
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                border(buttons.top3, borderStyle.none)
-                border(buttons.middle3, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowRight') {
-            }
-            else if (event.key === 'ArrowLeft') {
-                border(buttons.top3, borderStyle.none)
-                border(buttons.top2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowUp') {
-                return
-            }
-            else return
-        }
-    }
-}
-function moveFromMiddle1(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.bottom1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.top3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.top1, borderStyle.solid)
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.bottom1, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.top1, borderStyle.solid)
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                border(buttons.middle1, borderStyle.none)
-                border(buttons.bottom1, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowRight') {
-                border(buttons.middle1, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowLeft') {
-                return
-            }
-            else if (event.key === 'ArrowUp') {
-                border(buttons.middle1, borderStyle.none)
-                border(buttons.top1, borderStyle.solid)
-            }
-            else return
-        }
-    }
-}
-function moveFromMiddle2(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.bottom2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.top2, borderStyle.solid)
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.bottom2, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.top2, borderStyle.solid)
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.bottom2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowRight') {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.middle3, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowLeft') {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.middle1, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowUp') {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.top2, borderStyle.solid)
-            }
-            else return
-        }
-    }
-}
-function moveFromMiddle3(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.bottom3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.bottom1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.top3, borderStyle.solid)
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.bottom3, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.top3, borderStyle.solid)
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                border(buttons.middle3, borderStyle.none)
-                border(buttons.bottom3, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowRight') {
-                return
-            }
-            else if (event.key === 'ArrowLeft') {
-                border(buttons.middle3, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowUp') {
-                border(buttons.middle3, borderStyle.none)
-                border(buttons.top3, borderStyle.solid)
-            }
-            else return
-        }
-    }
-}
-function moveFromBottom1(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            return
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.bottom1, borderStyle.none)
-            border(buttons.bottom2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.bottom1, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            border(buttons.bottom1, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            return
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            border(buttons.bottom1, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                return
-            }
-            else if (event.key === 'ArrowRight') {
-                border(buttons.bottom1, borderStyle.none)
-                border(buttons.bottom2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowLeft') {
-                return
-            }
-            else if (event.key === 'ArrowUp') {
-                border(buttons.bottom1, borderStyle.none)
-                border(buttons.middle1, borderStyle.solid)
-            }
-            else return
-        }
-    }
-}
-function moveFromBottom2(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            return
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.bottom2, borderStyle.none)
-            border(buttons.bottom3, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.bottom2, borderStyle.none)
-            border(buttons.bottom1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            border(buttons.bottom2, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            return
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            border(buttons.bottom2, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                return
-            }
-            else if (event.key === 'ArrowRight') {
-                border(buttons.bottom2, borderStyle.none)
-                border(buttons.bottom3, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowLeft') {
-                border(buttons.bottom2, borderStyle.none)
-                border(buttons.bottom1, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowUp') {
-                border(buttons.bottom2, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else return
-        }
-    }
-}
-function moveFromBottom3(buttons, event, tmpKeydown) {
-    if (tmpKeydown.length === 1) {
-        if (event.key === 'ArrowDown') {
-            return
-        }
-        else if (event.key === 'ArrowRight') {
-            border(buttons.bottom3, borderStyle.none)
-            border(buttons.top1, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowLeft') {
-            border(buttons.bottom3, borderStyle.none)
-            border(buttons.bottom2, borderStyle.solid)
-        }
-        else if (event.key === 'ArrowUp') {
-            border(buttons.bottom3, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowRight')) {
-            return
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', 'ArrowLeft')) {
-            border(buttons.bottom3, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else {
-            if (event.key === 'ArrowDown') {
-                return
-            }
-            else if (event.key === 'ArrowRight') {
-                return
-            }
-            else if (event.key === 'ArrowLeft') {
-                border(buttons.bottom3, borderStyle.none)
-                border(buttons.bottom2, borderStyle.solid)
-            }
-            else if (event.key === 'ArrowUp') {
-                border(buttons.bottom3, borderStyle.none)
-                border(buttons.middle3, borderStyle.solid)
-            }
-            else return
-        }
-    }
+socket.on('success connection', function (rec) {
+    username = rec.id //現在はIDを名前としているが、将来は名前を自由に決められるようにする。
+})
+socket.on('receive text', function (rec) {
+    receiveTextEvent(rec.tag, rec.newID, rec.chatText, chat)
+    const flashColor = 'rgb(200,30,30)'
+    const defaultColor = 'rgb(30,30,30)'
+    const flashTime = 100
+    flashScreen(flashColor, defaultColor, flashTime,chat)
+})
+//ゲーム画面を見ている時、すぐコメントが送られたことに気づけるように画面を点滅させる。
+function flashScreen(flashColor, defaultColor, flashTime, element) {
+    element.style.backgroundColor = flashColor
+    setTimeout(function () {
+        element.style.backgroundColor = defaultColor
+    }, flashTime)
 }
