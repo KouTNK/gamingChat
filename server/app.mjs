@@ -15,10 +15,11 @@ httpServer.listen(port)
 
 const dirname = path.dirname(new URL(import.meta.url).pathname)
 
-//macOSのPCでgit clone でダウンロードした方はこのまま、それ以外であれば下のコメント文を読み、
-//当てはまるコードがあればコメントを外してください。
+//macOSのPCでgit clone でダウンロードした方はこのまま、それ以外であれば下２行をコメントアウトしてください。
 const gamingChatDir = 'gamingChat'
 const mainPath = dirname.split(gamingChatDir)[0] + gamingChatDir
+
+//コメント文を読み、当てはまるコードがあればコメントを外してください。
 
 //WindowsPCでgit clone でダウンロードした方は、下２行のコメントを外してください。
 // const gamingChatDir = 'gamingChat'
