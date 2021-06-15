@@ -14,8 +14,23 @@ console.log(`http://${IPv4}:${port}/`)
 httpServer.listen(port)
 
 const dirname = path.dirname(new URL(import.meta.url).pathname)
+
+//macOSのPCでgit clone でダウンロードした方はこのまま、それ以外であれば下のコメント文を読み、
+//当てはまるコードがあればコメントを外してください。
 const gamingChatDir = 'gamingChat'
 const mainPath = dirname.split(gamingChatDir)[0] + gamingChatDir
+
+//WindowsPCでgit clone でダウンロードした方は、下２行のコメントを外してください。
+// const gamingChatDir = 'gamingChat'
+// const mainPath = dirname.split(gamingChatDir)[0].slice(1) + gamingChatDir
+
+//macOSのPCでzipでダウンロードした人は下２行のコメントを外してサーバーを起動してください。
+// const gamingChatDir = 'gamingChat-main'
+// const mainPath = dirname.split(gamingChatDir)[0] + gamingChatDir
+
+//WidowsPCでzipでダウンロードした人は下２行のコメントを外してサーバーを起動してください。
+// const gamingChatDir = 'gamingChat-main'
+// const mainPath = dirname.split(gamingChatDir)[0].slice(1) + gamingChatDir
 
 app.use(express.static(mainPath))
 
