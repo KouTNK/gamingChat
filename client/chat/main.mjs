@@ -1,5 +1,6 @@
-import { border, borderStyle, findBorderButton, moveFromTop1, moveFromTop2, moveFromTop3, moveFromMiddle1, moveFromMiddle2, moveFromMiddle3, moveFromBottom1, moveFromBottom2, moveFromBottom3 } from '../modules/border.mjs'
-import { receiveTextEvent, submitTextEvent, getP_ID, createChatText } from '../modules/chat.mjs'
+import { border, borderStyle, findBorderButton, moveFromTop1, moveFromTop2, moveFromTop3, moveFromMiddle1, moveFromMiddle2, moveFromMiddle3, moveFromBottom1, moveFromBottom2, moveFromBottom3 } from '../../modules/border.mjs'
+import { receiveTextEvent, submitTextEvent, getP_ID, createChatText } from '../../modules/chat.mjs'
+import { flashScreen } from '../../modules/flash_screen.mjs'
 const socket = io.connect(`http://${location.host}/chat_app/chat`)
 //ボタンの配置
 //top1,top2,top3
@@ -130,10 +131,3 @@ socket.on('receive text', function (rec) {
     const flashTime = 100
     flashScreen(flashColor, defaultColor, flashTime,chat)
 })
-//ゲーム画面を見ている時、すぐコメントが送られたことに気づけるように画面を点滅させる。
-function flashScreen(flashColor, defaultColor, flashTime, element) {
-    element.style.backgroundColor = flashColor
-    setTimeout(function () {
-        element.style.backgroundColor = defaultColor
-    }, flashTime)
-}
