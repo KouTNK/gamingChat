@@ -3,8 +3,8 @@ import http from 'http'
 import { Server } from "socket.io"
 import os from 'os'
 import path from "node:path"
-import address from '../modules/address.mjs'
-import client from '../modules/client.mjs'
+import address from './address.mjs'
+import client from './client.mjs'
 
 const app = express()
 const httpServer = http.Server(app)

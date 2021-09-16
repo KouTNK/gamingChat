@@ -16,7 +16,6 @@ export default function (io) {
             })
             socket.on('submit text', function (rec) {
                 socket.broadcast.emit('receive text', rec)
-                console.log(rec)
             })
         })
 }

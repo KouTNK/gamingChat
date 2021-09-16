@@ -30,10 +30,11 @@ function moveFromTop1(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.left) {
             border(buttons.top1, borderStyle.none)
-            border(buttons.bottom3, borderStyle.solid)
+            border(buttons.top3, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
-            return
+            border(buttons.top1, borderStyle.none)
+            border(buttons.bottom1, borderStyle.solid)
         }
         else return
     }
@@ -79,7 +80,8 @@ function moveFromTop2(buttons, event, tmpKeydown) {
             border(buttons.top1, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
-            return
+            border(buttons.top2, borderStyle.none)
+            border(buttons.bottom2, borderStyle.solid)
         }
         else return
     }
@@ -119,14 +121,15 @@ function moveFromTop3(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.right) {
             border(buttons.top3, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
+            border(buttons.top1, borderStyle.solid)
         }
         else if (event.key === arrow.left) {
             border(buttons.top3, borderStyle.none)
             border(buttons.top2, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
-            return
+            border(buttons.top3, borderStyle.none)
+            border(buttons.bottom3, borderStyle.solid)
         }
         else return
     }
@@ -168,7 +171,7 @@ function moveFromMiddle1(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.left) {
             border(buttons.middle1, borderStyle.none)
-            border(buttons.top3, borderStyle.solid)
+            border(buttons.middle3, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
             border(buttons.middle1, borderStyle.none)
@@ -263,7 +266,7 @@ function moveFromMiddle3(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.right) {
             border(buttons.middle3, borderStyle.none)
-            border(buttons.bottom1, borderStyle.solid)
+            border(buttons.middle1, borderStyle.solid)
         }
         else if (event.key === arrow.left) {
             border(buttons.middle3, borderStyle.none)
@@ -307,7 +310,8 @@ function moveFromMiddle3(buttons, event, tmpKeydown) {
 function moveFromBottom1(buttons, event, tmpKeydown) {
     if (tmpKeydown.length === 1) {
         if (event.key === arrow.down) {
-            return
+            border(buttons.bottom1, borderStyle.none)
+            border(buttons.top1, borderStyle.solid)
         }
         else if (event.key === arrow.right) {
             border(buttons.bottom1, borderStyle.none)
@@ -315,7 +319,7 @@ function moveFromBottom1(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.left) {
             border(buttons.bottom1, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
+            border(buttons.bottom3, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
             border(buttons.bottom1, borderStyle.none)
@@ -353,7 +357,8 @@ function moveFromBottom1(buttons, event, tmpKeydown) {
 function moveFromBottom2(buttons, event, tmpKeydown) {
     if (tmpKeydown.length === 1) {
         if (event.key === arrow.down) {
-            return
+            border(buttons.bottom2, borderStyle.none)
+            border(buttons.top2, borderStyle.solid)
         }
         else if (event.key === arrow.right) {
             border(buttons.bottom2, borderStyle.none)
@@ -400,11 +405,12 @@ function moveFromBottom2(buttons, event, tmpKeydown) {
 function moveFromBottom3(buttons, event, tmpKeydown) {
     if (tmpKeydown.length === 1) {
         if (event.key === arrow.down) {
-            return
+            border(buttons.bottom3, borderStyle.none)
+            border(buttons.top3, borderStyle.solid)
         }
         else if (event.key === arrow.right) {
             border(buttons.bottom3, borderStyle.none)
-            border(buttons.top1, borderStyle.solid)
+            border(buttons.bottom1, borderStyle.solid)
         }
         else if (event.key === arrow.left) {
             border(buttons.bottom3, borderStyle.none)
