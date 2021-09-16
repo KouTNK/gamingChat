@@ -9,7 +9,7 @@ import client from '../modules/client.mjs'
 const app = express()
 const httpServer = http.Server(app)
 const IPv4 = address(os)
-const port = 8081
+const port = 8080
 console.log(`http://${IPv4}:${port}/`)
 httpServer.listen(port)
 
@@ -35,7 +35,7 @@ const mainPath = dirname.split(gamingChatDir)[0] + gamingChatDir
 
 app.use(express.static(mainPath))
 
-const chatPath = `${mainPath}/client/index.html`
+const chatPath = `${mainPath}/client/chat/index.html`
 app.get('/', function (req, res) {
   console.log(req.url)
   res.sendFile(chatPath)
