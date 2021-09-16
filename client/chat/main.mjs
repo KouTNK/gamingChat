@@ -1,6 +1,7 @@
 import { border, borderStyle, findBorderButton, moveFromTop1, moveFromTop2, moveFromTop3, moveFromMiddle1, moveFromMiddle2, moveFromMiddle3, moveFromBottom1, moveFromBottom2, moveFromBottom3 } from '../../modules/border.mjs'
 import { receiveTextEvent, submitTextEvent, getP_ID, createChatText } from '../../modules/chat.mjs'
 import { flashScreen } from '../../modules/flash_screen.mjs'
+import { registerUserName } from '../../modules/user.mjs'
 const socket = io.connect(`http://${location.host}/chat_app/chat`)
 //ボタンの配置
 //top1,top2,top3
@@ -31,6 +32,7 @@ const buttonsPotision = {
 }
 let tmpKeydown = []
 let username
+
 window.addEventListener('load', () => {
     socket.emit('check your connection')
     border(buttons.middle2, borderStyle.solid)
@@ -122,12 +124,12 @@ function isDuplicateKey(tmpKeydown, event) {
     return false
 }
 socket.on('success connection', function (rec) {
-    username = rec.id //現在はIDを名前としているが、将来は名前を自由に決められるようにする。
+    username = registerUserName() //現在はIDを名前としているが、将来は名前を自由に決められるようにする。
 })
 socket.on('receive text', function (rec) {
     receiveTextEvent(rec.tag, rec.newID, rec.chatText, chat)
     const flashColor = 'rgb(200,30,30)'
     const defaultColor = 'rgb(30,30,30)'
     const flashTime = 100
-    flashScreen(flashColor, defaultColor, flashTime,chat)
+    flashScreen(flashColor, defaultColor, flashTime, chat)
 })
