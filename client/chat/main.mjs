@@ -2,6 +2,8 @@ import { border, borderStyle, findBorderButton, moveFromTop1, moveFromTop2, move
 import { receiveTextEvent, submitTextEvent, getP_ID, createChatText } from '../../modules/chat.mjs'
 import { flashScreen } from '../../modules/flash_screen.mjs'
 import { registerUserName } from '../../modules/user.mjs'
+import { takeMessageLog, getTimeStamp } from '../../modules/log.mjs'
+// import { takeMessageLog } from '../../modules/log.mjs'
 const socket = io.connect(`http://${location.host}/chat_app/chat`)
 //ボタンの配置
 //top1,top2,top3
@@ -39,10 +41,12 @@ window.addEventListener('load', () => {
     socket.emit('check your connection')
     border(buttons.middle2, borderStyle.solid)
 })
-function clickEvent(tag, currentID, newID, text, element, username) {
+function clickEvent(tag, currentID, newID, text, element, username, position) {
     const chatText = createChatText(username, text)
     submitTextEvent(tag, newID, chatText, element, fontSizeOfTheTopText, defaultFontSize)
     socket.emit('submit text', { tag, currentID, newID, chatText })
+    const log = takeMessageLog(getTimeStamp(), username, text, "Click", position)
+    socket.emit('send message log', log)
 }
 //エンターキーを押すとonclickのイベントも発動してしまうため、
 //エンターキーの場合はclickEventが発動しないようにした。
@@ -52,39 +56,39 @@ function cancelKeydownEvent(tmpKeydown) {
 }
 buttons.top1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top1)
 }
 buttons.top2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.top2)
 }
 buttons.top3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.top3)
 }
 buttons.middle1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.middle1)
 }
 buttons.middle2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.middle2)
 }
 buttons.middle3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.middle3)
 }
 buttons.bottom1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.bottom1)
 }
 buttons.bottom2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.bottom2)
 }
 buttons.bottom3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.bottom3)
 }
 let isSubmit = true
 window.addEventListener('keyup', event => {

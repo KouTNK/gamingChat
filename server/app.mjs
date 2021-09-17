@@ -36,10 +36,14 @@ const mainPath = dirname.split(gamingChatDir)[0] + gamingChatDir
 app.use(express.static(mainPath))
 
 const chatPath = `${mainPath}/client/chat/index.html`
+const monitoringPath = `${mainPath}/client/monitoring/index.html`
 app.get('/', function (req, res) {
   console.log(req.url)
   res.sendFile(chatPath)
 })
-
+app.get('/monitoring', function (req, res) {
+  console.log(req.url)
+  res.sendFile(monitoringPath)
+})
 const io = new Server(httpServer)
 client(io)
