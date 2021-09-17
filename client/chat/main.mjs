@@ -32,6 +32,8 @@ const buttonsPotision = {
 }
 let tmpKeydown = []
 let username
+const fontSizeOfTheTopText = "40px"
+const defaultFontSize = "24px"
 
 window.addEventListener('load', () => {
     socket.emit('check your connection')
@@ -39,7 +41,7 @@ window.addEventListener('load', () => {
 })
 function clickEvent(tag, currentID, newID, text, element, username) {
     const chatText = createChatText(username, text)
-    submitTextEvent(tag, newID, chatText, element)
+    submitTextEvent(tag, newID, chatText, element, fontSizeOfTheTopText, defaultFontSize)
     socket.emit('submit text', { tag, currentID, newID, chatText })
 }
 //エンターキーを押すとonclickのイベントも発動してしまうため、
@@ -127,7 +129,7 @@ socket.on('success connection', function (rec) {
     username = registerUserName() //現在はIDを名前としているが、将来は名前を自由に決められるようにする。
 })
 socket.on('receive text', function (rec) {
-    receiveTextEvent(rec.tag, rec.newID, rec.chatText, chat)
+    receiveTextEvent(rec.tag, rec.newID, rec.chatText, chat, fontSizeOfTheTopText, defaultFontSize)
     const flashColor = 'rgb(200,30,30)'
     const defaultColor = 'rgb(30,30,30)'
     const flashTime = 100
