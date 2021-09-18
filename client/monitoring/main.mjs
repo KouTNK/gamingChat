@@ -1,4 +1,5 @@
 import { receiveTextEvent } from '../../modules/chat.mjs'
+import { download } from '../../modules/log.mjs'
 const socket = io.connect(`http://${location.host}/chat_app/monitoring`)
 const history = []
 const chat = document.getElementById('chat')
@@ -20,3 +21,7 @@ socket.on('receive message log', function (log) {
     history.push(log)
     console.log(history)
 })
+
+document.getElementById("download").onclick = function () {
+    download(history,"log.csv")
+}

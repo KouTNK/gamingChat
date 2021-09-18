@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css"
             href="/client/monitoring/style.css">
         <script type="module" src="/client/monitoring/main.mjs"></script>
+        <script src="../../modules/encoding.js/encoding.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <title>監視画面</title>
     </head>
@@ -13,7 +14,7 @@
     <body>
         <div id="chat" class="chat"></div>
         <div class="buttons">
-            <button>保存</button>
+            <button id="download">保存</button>
         </div>
 
     </body>
