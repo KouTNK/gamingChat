@@ -48,6 +48,7 @@ function clickEvent(tag, currentID, newID, text, element, username, position) {
     const log = takeMessageLog(getTimeStamp(), username, text, "Click", position)
     socket.emit('send message log', log)
 }
+
 //エンターキーを押すとonclickのイベントも発動してしまうため、
 //エンターキーの場合はclickEventが発動しないようにした。
 //もっといい書き方があるかもしれないので、今後調べる。
@@ -60,35 +61,35 @@ buttons.top1.onclick = (event) => {
 }
 buttons.top2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.top2)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top2)
 }
 buttons.top3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.top3)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top3)
 }
 buttons.middle1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.middle1)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle1)
 }
 buttons.middle2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.middle2)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle2)
 }
 buttons.middle3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.middle3)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle3)
 }
 buttons.bottom1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.bottom1)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom1)
 }
 buttons.bottom2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.bottom2)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom2)
 }
 buttons.bottom3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username,buttonsPotision.bottom3)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom3)
 }
 let isSubmit = true
 window.addEventListener('keyup', event => {
@@ -122,6 +123,10 @@ window.addEventListener('keydown', event => {
     else if (position === buttonsPotision.bottom1) moveFromBottom1(buttons, event, tmpKeydown)
     else if (position === buttonsPotision.bottom2) moveFromBottom2(buttons, event, tmpKeydown)
     else if (position === buttonsPotision.bottom3) moveFromBottom3(buttons, event, tmpKeydown)
+    
+    const text = document.getElementById(position).innerText
+    const log = takeMessageLog(getTimeStamp(), username, text, event.key, position)
+    socket.emit('send message log', log)
 })
 function isDuplicateKey(tmpKeydown, event) {
     for (const key of tmpKeydown) {

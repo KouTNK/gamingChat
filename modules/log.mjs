@@ -13,6 +13,7 @@ function takeMessageLog(timeStamp, username, text, key, position) {
 function getTimeStamp() {
     return Date.now()
 }
+
 function test() {
     const history = []
     const timeStamp = getTimeStamp()
