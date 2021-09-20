@@ -34,16 +34,21 @@ const buttonsPotision = {
 }
 let tmpKeydown = []
 let username
-const fontSizeOfTheTopText = "40px"
-const defaultFontSize = "24px"
+// const fontSizeOfTheTopText = "40px"
+// const defaultFontSize = "24px"
+const className = {
+    chatFrame: "chat_frame",
+    username: "username",
+    chatText: "chat_text"
+}
 
 window.addEventListener('load', () => {
     socket.emit('check your connection')
     border(buttons.middle2, borderStyle.solid)
 })
 function clickEvent(tag, currentID, newID, text, element, username, position) {
-    const chatText = createChatText(username, text)
-    submitTextEvent(tag, newID, chatText, element, fontSizeOfTheTopText, defaultFontSize)
+    const chatText = createChatText(username, className.username, text, className.chatText)
+    submitTextEvent(tag, newID, chatText, element, className.chatFrame)
     socket.emit('submit text', { tag, currentID, newID, chatText })
     const log = takeMessageLog(getTimeStamp(), username, text, "Click", position)
     socket.emit('send message log', log)
@@ -98,7 +103,7 @@ window.addEventListener('keyup', event => {
     //他のキーと同時押しでエンターキーを押した場合も間違いの可能性があるため、clickEventを発動しないようにした。
     if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit) {
         const position = findBorderButton(buttons, borderStyle.solid)
-        clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, buttons[position].value, chat, username)
+        clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, buttons[position].value, chat, username, position)
     }
     //キーを離した時、離したキーを配列から削除する。
     tmpKeydown = tmpKeydown.filter(key => key !== event.key)
@@ -123,7 +128,7 @@ window.addEventListener('keydown', event => {
     else if (position === buttonsPotision.bottom1) moveFromBottom1(buttons, event, tmpKeydown)
     else if (position === buttonsPotision.bottom2) moveFromBottom2(buttons, event, tmpKeydown)
     else if (position === buttonsPotision.bottom3) moveFromBottom3(buttons, event, tmpKeydown)
-    
+
     const text = document.getElementById(position).innerText
     const log = takeMessageLog(getTimeStamp(), username, text, event.key, position)
     socket.emit('send message log', log)
@@ -138,7 +143,7 @@ socket.on('success connection', function (rec) {
     username = registerUserName() //現在はIDを名前としているが、将来は名前を自由に決められるようにする。
 })
 socket.on('receive text', function (rec) {
-    receiveTextEvent(rec.tag, rec.newID, rec.chatText, chat, fontSizeOfTheTopText, defaultFontSize)
+    receiveTextEvent(rec.tag, rec.newID, rec.chatText, chat, className.chatFrame)
     const flashColor = 'rgb(200,30,30)'
     const defaultColor = 'rgb(30,30,30)'
     const flashTime = 100

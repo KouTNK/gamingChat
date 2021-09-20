@@ -8,24 +8,23 @@ function getP_ID() {
 function plusP_ID() {
     p_id++
 }
-function createChatText(username, text) {
-    return `${username}: ${text}`
+function createChatText(username, usernameClassName, text, textClassName) {
+    return `<p class=${usernameClassName}>${username}</p><br><p class=${textClassName}>${text}</p>`
+
 }
-function receiveTextEvent(tag, newID, text, element, fontSizeOfTheTopText, defaultFontSize) {
-    appendText(tag, newID, text, element, fontSizeOfTheTopText, defaultFontSize)
-    changeFontSizeOfFirstTextInTheChildNode(element, defaultFontSize)
+function receiveTextEvent(tag, newID, text, element, className) {
+    appendText(tag, newID, text, element, className)
     plusP_ID()
 }
-function submitTextEvent(tag, newID, text, element, fontSizeOfTheTopText, defaultFontSize) {
-    appendText(tag, newID, text, element, fontSizeOfTheTopText, defaultFontSize)
-    changeFontSizeOfFirstTextInTheChildNode(element, defaultFontSize)
+function submitTextEvent(tag, newID, text, element, className) {
+    appendText(tag, newID, text, element, className)
     plusP_ID()
 }
-function appendText(tag, newID, text, element, fontSizeOfTheTopText, defaultFontSize) {
+function appendText(tag, newID, text, element, className) {
     const newTag = document.createElement(tag)
     newTag.id = newID
-    newTag.innerText = text
-    newTag.style.fontSize = fontSizeOfTheTopText
+    newTag.innerHTML = text
+    newTag.className = className
     element.prepend(newTag)
 }
 function changeFontSizeOfFirstTextInTheChildNode(element, fontSize) {
