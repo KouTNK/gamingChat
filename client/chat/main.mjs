@@ -1,6 +1,6 @@
 import { border, borderStyle, findBorderButton, moveFromTop1, moveFromTop2, moveFromTop3, moveFromMiddle1, moveFromMiddle2, moveFromMiddle3, moveFromBottom1, moveFromBottom2, moveFromBottom3 } from '../../modules/border.mjs'
 import { receiveTextEvent, submitTextEvent, getP_ID, createChatText } from '../../modules/chat.mjs'
-import { flashScreen } from '../../modules/flash_screen.mjs'
+import { flashScreenAndRemoveElement, createFlashScreenOfElement } from '../../modules/flash_screen.mjs'
 import { registerUserName } from '../../modules/user.mjs'
 import { takeMessageLog, getTimeStamp } from '../../modules/log.mjs'
 // import { takeMessageLog } from '../../modules/log.mjs'
@@ -21,6 +21,7 @@ const buttons = {
     bottom3: document.getElementById('bottom3'),
 }
 const chat = document.getElementById('chat')
+
 const buttonsPotision = {
     top1: 'top1',
     top2: 'top2',
@@ -36,10 +37,14 @@ let tmpKeydown = []
 let username
 // const fontSizeOfTheTopText = "40px"
 // const defaultFontSize = "24px"
+const elementId = {
+    flashScreen: "flash_screen"
+}
 const className = {
     chatFrame: "chat_frame",
     username: "username",
-    chatText: "chat_text"
+    chatText: "chat_text",
+    flashScreen: "flash_screen"
 }
 
 window.addEventListener('load', () => {
@@ -143,9 +148,10 @@ socket.on('success connection', function (rec) {
     username = registerUserName() //現在はIDを名前としているが、将来は名前を自由に決められるようにする。
 })
 socket.on('receive text', function (rec) {
+    // document.getElementById('flash_screen').remove()
     receiveTextEvent(rec.tag, rec.newID, rec.chatText, chat, className.chatFrame)
     const flashColor = 'rgb(200,30,30)'
-    const defaultColor = 'rgb(30,30,30)'
     const flashTime = 100
-    flashScreen(flashColor, defaultColor, flashTime, chat)
+    const flashScreenOfElement = createFlashScreenOfElement('div', elementId.flashScreen, className.flashScreen, chat)
+    flashScreenAndRemoveElement(flashColor, flashTime, flashScreenOfElement)
 })

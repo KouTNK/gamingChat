@@ -1,5 +1,7 @@
 body {
     background-color: rgb(30, 30, 30);
+    overflow: hidden;
+    margin: 0;
 }
 
 .chat {
@@ -49,10 +51,15 @@ body {
     font-size: 24px;
     margin-right: 1%;
     margin-left: 1%;
-    margin-top: 1%;
-    /* border: solid; */
+    margin-top: 0.3%;
     border: none;
     border-color: rgb(200, 200, 200);
     border-width: 1px;
     outline: none;
+}
+
+.flash_screen {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(50, 50, 50);
 }
