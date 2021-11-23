@@ -21,6 +21,118 @@ const buttons = {
     bottom3: document.getElementById('bottom3'),
 }
 const chat = document.getElementById('chat')
+const buttonsDiv = document.getElementById('buttons')
+buttonsDiv.addEventListener('touchmove', logSwipe)
+buttonsDiv.addEventListener('touchstart', logSwipeStart)
+buttonsDiv.addEventListener('touchend', logSwipeEnd)
+let startX
+let endX
+function logSwipeStart(event) {
+    startX = event.touches[0].pageX
+    endX = undefined
+}
+function logSwipe(event) {
+    event.preventDefault()
+    endX = event.touches[0].pageX
+}
+const chatSet = {
+    default: "default",
+    left: "left",
+    right: "right"
+}
+let currentChatSet = chatSet.default
+function logSwipeEnd(event) {
+    console.log('endX:' + endX, 'startX:' + startX, 'endX-startX:' + (endX - startX))
+    if (-70 < (endX - startX)) {
+        if (chatSet.default === currentChatSet) {
+            currentChatSet = chatSet.left
+            buttons.top1.innerHTML = 'こんにちは'
+            buttons.top1.value = 'こんにちは'
+            buttons.top2.innerHTML = 'グッド！'
+            buttons.top2.value = 'グッド！'
+            buttons.top3.innerHTML = 'どんまい！'
+            buttons.top3.value = 'どんまい！'
+            buttons.middle1.innerHTML = 'くそ！'
+            buttons.middle1.value = 'くそ！'
+            buttons.middle2.innerHTML = '敵チキンかよ！'
+            buttons.middle2.value = '敵チキンかよ！'
+            buttons.middle3.innerHTML = '助かった！'
+            buttons.middle3.value = '助かった！'
+            buttons.bottom1.innerHTML = '草生えたw'
+            buttons.bottom1.value = '草生えたw'
+            buttons.bottom2.innerHTML = 'うるせーよ'
+            buttons.bottom2.value = 'うるせーよ'
+            buttons.bottom3.innerHTML = '黙れ！'
+            buttons.bottom3.value = '黙れ！'
+        }
+        else if (chatSet.right === currentChatSet) {
+            currentChatSet = chatSet.default
+            buttons.top1.innerHTML = '攻めるぞ！'
+            buttons.top1.value = '攻めるぞ！'
+            buttons.top2.innerHTML = 'ロー！'
+            buttons.top2.value = 'ロー！'
+            buttons.top3.innerHTML = '攻めて！'
+            buttons.top3.value = '攻めて！'
+            buttons.middle1.innerHTML = '待つぞ！'
+            buttons.middle1.value = '待つぞ！'
+            buttons.middle2.innerHTML = '漁夫だ！'
+            buttons.middle2.value = '漁夫だ！'
+            buttons.middle3.innerHTML = '逃げよう！'
+            buttons.middle3.value = '逃げよう！'
+            buttons.bottom1.innerHTML = '回復してる！'
+            buttons.bottom1.value = '回復してる！'
+            buttons.bottom2.innerHTML = '見張って！'
+            buttons.bottom2.value = '見張って！'
+            buttons.bottom3.innerHTML = '俺を盾にしろ！'
+            buttons.bottom3.value = '俺を盾にしろ！'
+        }
+    }
+    else if (70 > endX - startX) {
+        if (chatSet.default === currentChatSet) {
+            currentChatSet = chatSet.right
+            buttons.top1.innerHTML = '挟み撃ちしよう'
+            buttons.top1.value = '挟み撃ちしよう'
+            buttons.top2.innerHTML = '3秒後にみんな攻めよう'
+            buttons.top2.value = '3秒後にみんな攻めよう'
+            buttons.top3.innerHTML = '高所でこもろう'
+            buttons.top3.value = '高所でこもろう'
+            buttons.middle1.innerHTML = '誰か残って！前に出る！'
+            buttons.middle1.value = '誰か残って！前に出る！'
+            buttons.middle2.innerHTML = '誰か残って！探索する！'
+            buttons.middle2.value = '誰か残って！探索する！'
+            buttons.middle3.innerHTML = '俺ここにいるから探索して'
+            buttons.middle3.value = '俺ここにいるから探索して'
+            buttons.bottom1.innerHTML = '青の人ウルト使って！'
+            buttons.bottom1.value = '青の人ウルト使って！'
+            buttons.bottom2.innerHTML = '黄の人ウルト使って！'
+            buttons.bottom2.value = '黄の人ウルト使って！'
+            buttons.bottom3.innerHTML = '緑の人ウルト使って！'
+            buttons.bottom3.value = '緑の人ウルト使って！'
+        }
+        else if (chatSet.left === currentChatSet) {
+            currentChatSet = chatSet.default
+            buttons.top1.innerHTML = '攻めるぞ！'
+            buttons.top1.value = '攻めるぞ！'
+            buttons.top2.innerHTML = 'ロー！'
+            buttons.top2.value = 'ロー！'
+            buttons.top3.innerHTML = '攻めて！'
+            buttons.top3.value = '攻めて！'
+            buttons.middle1.innerHTML = '待つぞ！'
+            buttons.middle1.value = '待つぞ！'
+            buttons.middle2.innerHTML = '漁夫だ！'
+            buttons.middle2.value = '漁夫だ！'
+            buttons.middle3.innerHTML = '逃げよう！'
+            buttons.middle3.value = '逃げよう！'
+            buttons.bottom1.innerHTML = '回復してる！'
+            buttons.bottom1.value = '回復してる！'
+            buttons.bottom2.innerHTML = '見張って！'
+            buttons.bottom2.value = '見張って！'
+            buttons.bottom3.innerHTML = '俺を盾にしろ！'
+            buttons.bottom3.value = '俺を盾にしろ！'
+        }
+    }
+}
+
 
 const buttonsPotision = {
     top1: 'top1',
