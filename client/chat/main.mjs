@@ -67,68 +67,122 @@ function logSwipeEnd(event) {
         }
         else if (chatSet.right === currentChatSet) {
             currentChatSet = chatSet.default
-            buttons.top1.innerHTML = '攻めるぞ！'
-            buttons.top1.value = '攻めるぞ！'
-            buttons.top2.innerHTML = 'ロー！'
-            buttons.top2.value = 'ロー！'
-            buttons.top3.innerHTML = '攻めて！'
-            buttons.top3.value = '攻めて！'
-            buttons.middle1.innerHTML = '待つぞ！'
-            buttons.middle1.value = '待つぞ！'
-            buttons.middle2.innerHTML = '漁夫だ！'
-            buttons.middle2.value = '漁夫だ！'
-            buttons.middle3.innerHTML = '逃げよう！'
-            buttons.middle3.value = '逃げよう！'
-            buttons.bottom1.innerHTML = '回復してる！'
-            buttons.bottom1.value = '回復してる！'
-            buttons.bottom2.innerHTML = '見張って！'
-            buttons.bottom2.value = '見張って！'
-            buttons.bottom3.innerHTML = '俺を盾にしろ！'
-            buttons.bottom3.value = '俺を盾にしろ！'
+            // buttons.top1.innerHTML = '攻めるぞ！'
+            // buttons.top1.value = '攻めるぞ！'
+            // buttons.top2.innerHTML = 'ロー！'
+            // buttons.top2.value = 'ロー！'
+            // buttons.top3.innerHTML = '攻めて！'
+            // buttons.top3.value = '攻めて！'
+            // buttons.middle1.innerHTML = '待つぞ！'
+            // buttons.middle1.value = '待つぞ！'
+            // buttons.middle2.innerHTML = '漁夫だ！'
+            // buttons.middle2.value = '漁夫だ！'
+            // buttons.middle3.innerHTML = '逃げよう！'
+            // buttons.middle3.value = '逃げよう！'
+            // buttons.bottom1.innerHTML = '回復してる！'
+            // buttons.bottom1.value = '回復してる！'
+            // buttons.bottom2.innerHTML = '見張って！'
+            // buttons.bottom2.value = '見張って！'
+            // buttons.bottom3.innerHTML = '俺を盾にしろ！'
+            // buttons.bottom3.value = '俺を盾にしろ！'
+            buttons.top1.innerHTML = '家を作る！'
+            buttons.top1.value = '家を作る！'
+            buttons.top2.innerHTML = '木を集める！'
+            buttons.top2.value = '木を集める！'
+            buttons.top3.innerHTML = '石を集める！'
+            buttons.top3.value = '石を集める！'
+            buttons.middle1.innerHTML = '敵を倒す！'
+            buttons.middle1.value = '敵を倒す！'
+            buttons.middle2.innerHTML = '助けて！死にそう！'
+            buttons.middle2.value = '助けて！死にそう！'
+            buttons.middle3.innerHTML = 'X軸、Y軸、Z軸教えて！'
+            buttons.middle3.value = 'X軸、Y軸、Z軸教えて！'
+            buttons.bottom1.innerHTML = '迷った！'
+            buttons.bottom1.value = '迷った！'
+            buttons.bottom2.innerHTML = '修理する！'
+            buttons.bottom2.value = '修理する！'
+            buttons.bottom3.innerHTML = '一緒に来て！'
+            buttons.bottom3.value = '一緒に来て！'
         }
     }
     else if (70 > endX - startX) {
         if (chatSet.default === currentChatSet) {
             currentChatSet = chatSet.right
-            buttons.top1.innerHTML = '挟み撃ちしよう'
-            buttons.top1.value = '挟み撃ちしよう'
-            buttons.top2.innerHTML = '3秒後にみんな攻めよう'
-            buttons.top2.value = '3秒後にみんな攻めよう'
-            buttons.top3.innerHTML = '高所でこもろう'
-            buttons.top3.value = '高所でこもろう'
-            buttons.middle1.innerHTML = '誰か残って！前に出る！'
-            buttons.middle1.value = '誰か残って！前に出る！'
-            buttons.middle2.innerHTML = '誰か残って！探索する！'
-            buttons.middle2.value = '誰か残って！探索する！'
-            buttons.middle3.innerHTML = '俺ここにいるから探索して'
-            buttons.middle3.value = '俺ここにいるから探索して'
-            buttons.bottom1.innerHTML = '青の人ウルト使って！'
-            buttons.bottom1.value = '青の人ウルト使って！'
-            buttons.bottom2.innerHTML = '黄の人ウルト使って！'
-            buttons.bottom2.value = '黄の人ウルト使って！'
-            buttons.bottom3.innerHTML = '緑の人ウルト使って！'
-            buttons.bottom3.value = '緑の人ウルト使って！'
+            buttons.top1.innerHTML = '粘土集める！'
+            buttons.top1.value = '粘土集める！'
+            buttons.top2.innerHTML = '寝よう！'
+            buttons.top2.value = '寝よう！'
+            buttons.top3.innerHTML = '雪のとこに来て！'
+            buttons.top3.value = '雪のとこに来て！'
+            buttons.middle1.innerHTML = '馬に乗って出かける！'
+            buttons.middle1.value = '馬に乗って出かける！'
+            buttons.middle2.innerHTML = '休憩する！'
+            buttons.middle2.value = '休憩する！'
+            buttons.middle3.innerHTML = '難易度をピースに変えた！'
+            buttons.middle3.value = '難易度をピースに変えた！'
+            buttons.bottom1.innerHTML = '難易度をハードに変えた！'
+            buttons.bottom1.value = '難易度をハードに変えた！'
+            buttons.bottom2.innerHTML = 'チェストを置く！'
+            buttons.bottom2.value = 'チェストを置く！'
+            buttons.bottom3.innerHTML = '倒すな！'
+            buttons.bottom3.value = '倒すな！'
+            // buttons.top1.innerHTML = '挟み撃ちしよう'
+            // buttons.top1.value = '挟み撃ちしよう'
+            // buttons.top2.innerHTML = '3秒後にみんな攻めよう'
+            // buttons.top2.value = '3秒後にみんな攻めよう'
+            // buttons.top3.innerHTML = '高所でこもろう'
+            // buttons.top3.value = '高所でこもろう'
+            // buttons.middle1.innerHTML = '誰か残って！前に出る！'
+            // buttons.middle1.value = '誰か残って！前に出る！'
+            // buttons.middle2.innerHTML = '誰か残って！探索する！'
+            // buttons.middle2.value = '誰か残って！探索する！'
+            // buttons.middle3.innerHTML = '俺ここにいるから探索して'
+            // buttons.middle3.value = '俺ここにいるから探索して'
+            // buttons.bottom1.innerHTML = '青の人ウルト使って！'
+            // buttons.bottom1.value = '青の人ウルト使って！'
+            // buttons.bottom2.innerHTML = '黄の人ウルト使って！'
+            // buttons.bottom2.value = '黄の人ウルト使って！'
+            // buttons.bottom3.innerHTML = '緑の人ウルト使って！'
+            // buttons.bottom3.value = '緑の人ウルト使って！'
         }
         else if (chatSet.left === currentChatSet) {
             currentChatSet = chatSet.default
-            buttons.top1.innerHTML = '攻めるぞ！'
-            buttons.top1.value = '攻めるぞ！'
-            buttons.top2.innerHTML = 'ロー！'
-            buttons.top2.value = 'ロー！'
-            buttons.top3.innerHTML = '攻めて！'
-            buttons.top3.value = '攻めて！'
-            buttons.middle1.innerHTML = '待つぞ！'
-            buttons.middle1.value = '待つぞ！'
-            buttons.middle2.innerHTML = '漁夫だ！'
-            buttons.middle2.value = '漁夫だ！'
-            buttons.middle3.innerHTML = '逃げよう！'
-            buttons.middle3.value = '逃げよう！'
-            buttons.bottom1.innerHTML = '回復してる！'
-            buttons.bottom1.value = '回復してる！'
-            buttons.bottom2.innerHTML = '見張って！'
-            buttons.bottom2.value = '見張って！'
-            buttons.bottom3.innerHTML = '俺を盾にしろ！'
-            buttons.bottom3.value = '俺を盾にしろ！'
+            buttons.top1.innerHTML = '家を作る！'
+            buttons.top1.value = '家を作る！'
+            buttons.top2.innerHTML = '木を集める！'
+            buttons.top2.value = '木を集める！'
+            buttons.top3.innerHTML = '石を集める！'
+            buttons.top3.value = '石を集める！'
+            buttons.middle1.innerHTML = '敵を倒す！'
+            buttons.middle1.value = '敵を倒す！'
+            buttons.middle2.innerHTML = '助けて！死にそう！'
+            buttons.middle2.value = '助けて！死にそう！'
+            buttons.middle3.innerHTML = 'X軸、Y軸、Z軸教えて！'
+            buttons.middle3.value = 'X軸、Y軸、Z軸教えて！'
+            buttons.bottom1.innerHTML = '迷った！'
+            buttons.bottom1.value = '迷った！'
+            buttons.bottom2.innerHTML = '修理する！'
+            buttons.bottom2.value = '修理する！'
+            buttons.bottom3.innerHTML = '一緒に来て！'
+            buttons.bottom3.value = '一緒に来て！'
+            // buttons.top1.innerHTML = '攻めるぞ！'
+            // buttons.top1.value = '攻めるぞ！'
+            // buttons.top2.innerHTML = 'ロー！'
+            // buttons.top2.value = 'ロー！'
+            // buttons.top3.innerHTML = '攻めて！'
+            // buttons.top3.value = '攻めて！'
+            // buttons.middle1.innerHTML = '待つぞ！'
+            // buttons.middle1.value = '待つぞ！'
+            // buttons.middle2.innerHTML = '漁夫だ！'
+            // buttons.middle2.value = '漁夫だ！'
+            // buttons.middle3.innerHTML = '逃げよう！'
+            // buttons.middle3.value = '逃げよう！'
+            // buttons.bottom1.innerHTML = '回復してる！'
+            // buttons.bottom1.value = '回復してる！'
+            // buttons.bottom2.innerHTML = '見張って！'
+            // buttons.bottom2.value = '見張って！'
+            // buttons.bottom3.innerHTML = '俺を盾にしろ！'
+            // buttons.bottom3.value = '俺を盾にしろ！'
         }
     }
 }
@@ -156,7 +210,9 @@ const className = {
     chatFrame: "chat_frame",
     username: "username",
     chatText: "chat_text",
-    flashScreen: "flash_screen"
+    flashScreen: "flash_screen",
+    textarea: "textarea",
+    submitButton: "submitButton"
 }
 
 window.addEventListener('load', () => {
@@ -167,6 +223,22 @@ function clickEvent(tag, currentID, newID, text, element, username, position) {
     const chatText = createChatText(username, className.username, text, className.chatText)
     submitTextEvent(tag, newID, chatText, element, className.chatFrame)
     socket.emit('submit text', { tag, currentID, newID, chatText })
+    const log = takeMessageLog(getTimeStamp(), username, text, "Click", position)
+    socket.emit('send message log', log)
+}
+
+document.getElementById(className.submitButton).onclick = (event) => {
+    const textarea = document.getElementById(className.textarea)
+    const inputText = textarea.innerText
+    submitInputTextForTextarea('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, inputText, chat, username)
+    textarea.innerText = ""
+}
+
+function submitInputTextForTextarea(tag, currentID, newID, text, element, username) {
+    const chatText = createChatText(username, className.username, text, className.chatText)
+    submitTextEvent(tag, newID, chatText, element, className.chatFrame)
+    socket.emit('submit text', { tag, currentID, newID, chatText })
+    const position = "input"
     const log = takeMessageLog(getTimeStamp(), username, text, "Click", position)
     socket.emit('send message log', log)
 }
