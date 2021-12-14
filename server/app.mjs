@@ -37,13 +37,22 @@ app.use(express.static(mainPath))
 
 const chatPath = `${mainPath}/client/chat/index.html`
 const monitoringPath = `${mainPath}/client/monitoring/index.html`
-app.get('/', function (req, res) {
+const gamingChatPath = `${mainPath}/client/hp/index.html`
+app.get('/gaming_chat/minecraft', function (req, res) {
+  console.log(req.url)
+  res.sendFile(chatPath)
+})
+app.get('/gaming_chat/apex_legends', function (req, res) {
   console.log(req.url)
   res.sendFile(chatPath)
 })
 app.get('/monitoring', function (req, res) {
   console.log(req.url)
   res.sendFile(monitoringPath)
+})
+app.get('/', function (req, res) {
+  console.log(req.url)
+  res.sendFile(gamingChatPath)
 })
 const io = new Server(httpServer)
 client(io)
