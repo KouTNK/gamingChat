@@ -5,7 +5,11 @@ body {
 }
 
 body * {
-    color:white;
+    color: white;
+}
+
+a {
+    font-size: 24px;
 }
 
 /* 
