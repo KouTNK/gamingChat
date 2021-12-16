@@ -30,39 +30,13 @@ function moveFromTop1(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.left) {
             border(buttons.top1, borderStyle.none)
-            border(buttons.top3, borderStyle.solid)
+            border(buttons.bottom3, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
             border(buttons.top1, borderStyle.none)
             border(buttons.bottom1, borderStyle.solid)
         }
         else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            border(buttons.top1, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            return
-        }
-        else {
-            if (event.key === arrow.down) {
-                border(buttons.top1, borderStyle.none)
-                border(buttons.middle1, borderStyle.solid)
-            }
-            else if (event.key === arrow.right) {
-                border(buttons.top1, borderStyle.none)
-                border(buttons.top2, borderStyle.solid)
-            }
-            else if (event.key === arrow.left) {
-                return
-            }
-            else if (event.key === arrow.up) {
-                return
-            }
-            else return
-        }
     }
 }
 function moveFromTop2(buttons, event, tmpKeydown) {
@@ -85,33 +59,6 @@ function moveFromTop2(buttons, event, tmpKeydown) {
         }
         else return
     }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            border(buttons.top2, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            return
-        }
-        else {
-            if (event.key === arrow.down) {
-                border(buttons.top2, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else if (event.key === arrow.right) {
-                border(buttons.top2, borderStyle.none)
-                border(buttons.top3, borderStyle.solid)
-            }
-            else if (event.key === arrow.left) {
-                border(buttons.top2, borderStyle.none)
-                border(buttons.top1, borderStyle.solid)
-            }
-            else if (event.key === arrow.up) {
-                return
-            }
-            else return
-        }
-    }
 }
 function moveFromTop3(buttons, event, tmpKeydown) {
     if (tmpKeydown.length === 1) {
@@ -121,7 +68,7 @@ function moveFromTop3(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.right) {
             border(buttons.top3, borderStyle.none)
-            border(buttons.top1, borderStyle.solid)
+            border(buttons.middle1, borderStyle.solid)
         }
         else if (event.key === arrow.left) {
             border(buttons.top3, borderStyle.none)
@@ -132,31 +79,6 @@ function moveFromTop3(buttons, event, tmpKeydown) {
             border(buttons.bottom3, borderStyle.solid)
         }
         else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            border(buttons.top3, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            return
-        }
-        else {
-            if (event.key === arrow.down) {
-                border(buttons.top3, borderStyle.none)
-                border(buttons.middle3, borderStyle.solid)
-            }
-            else if (event.key === arrow.right) {
-            }
-            else if (event.key === arrow.left) {
-                border(buttons.top3, borderStyle.none)
-                border(buttons.top2, borderStyle.solid)
-            }
-            else if (event.key === arrow.up) {
-                return
-            }
-            else return
-        }
     }
 }
 function moveFromMiddle1(buttons, event, tmpKeydown) {
@@ -171,41 +93,13 @@ function moveFromMiddle1(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.left) {
             border(buttons.middle1, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
+            border(buttons.top3, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
             border(buttons.middle1, borderStyle.none)
             border(buttons.top1, borderStyle.solid)
         }
         else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.bottom1, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            border(buttons.middle1, borderStyle.none)
-            border(buttons.top1, borderStyle.solid)
-        }
-        else {
-            if (event.key === arrow.down) {
-                border(buttons.middle1, borderStyle.none)
-                border(buttons.bottom1, borderStyle.solid)
-            }
-            else if (event.key === arrow.right) {
-                border(buttons.middle1, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else if (event.key === arrow.left) {
-                return
-            }
-            else if (event.key === arrow.up) {
-                border(buttons.middle1, borderStyle.none)
-                border(buttons.top1, borderStyle.solid)
-            }
-            else return
-        }
     }
 }
 function moveFromMiddle2(buttons, event, tmpKeydown) {
@@ -228,35 +122,6 @@ function moveFromMiddle2(buttons, event, tmpKeydown) {
         }
         else return
     }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.bottom2, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            border(buttons.middle2, borderStyle.none)
-            border(buttons.top2, borderStyle.solid)
-        }
-        else {
-            if (event.key === arrow.down) {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.bottom2, borderStyle.solid)
-            }
-            else if (event.key === arrow.right) {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.middle3, borderStyle.solid)
-            }
-            else if (event.key === arrow.left) {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.middle1, borderStyle.solid)
-            }
-            else if (event.key === arrow.up) {
-                border(buttons.middle2, borderStyle.none)
-                border(buttons.top2, borderStyle.solid)
-            }
-            else return
-        }
-    }
 }
 function moveFromMiddle3(buttons, event, tmpKeydown) {
     if (tmpKeydown.length === 1) {
@@ -266,7 +131,7 @@ function moveFromMiddle3(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.right) {
             border(buttons.middle3, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
+            border(buttons.bottom1, borderStyle.solid)
         }
         else if (event.key === arrow.left) {
             border(buttons.middle3, borderStyle.none)
@@ -277,34 +142,6 @@ function moveFromMiddle3(buttons, event, tmpKeydown) {
             border(buttons.top3, borderStyle.solid)
         }
         else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.bottom3, borderStyle.solid)
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            border(buttons.middle3, borderStyle.none)
-            border(buttons.top3, borderStyle.solid)
-        }
-        else {
-            if (event.key === arrow.down) {
-                border(buttons.middle3, borderStyle.none)
-                border(buttons.bottom3, borderStyle.solid)
-            }
-            else if (event.key === arrow.right) {
-                return
-            }
-            else if (event.key === arrow.left) {
-                border(buttons.middle3, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else if (event.key === arrow.up) {
-                border(buttons.middle3, borderStyle.none)
-                border(buttons.top3, borderStyle.solid)
-            }
-            else return
-        }
     }
 }
 function moveFromBottom1(buttons, event, tmpKeydown) {
@@ -319,39 +156,13 @@ function moveFromBottom1(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.left) {
             border(buttons.bottom1, borderStyle.none)
-            border(buttons.bottom3, borderStyle.solid)
+            border(buttons.middle3, borderStyle.solid)
         }
         else if (event.key === arrow.up) {
             border(buttons.bottom1, borderStyle.none)
             border(buttons.middle1, borderStyle.solid)
         }
         else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            return
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            border(buttons.bottom1, borderStyle.none)
-            border(buttons.middle1, borderStyle.solid)
-        }
-        else {
-            if (event.key === arrow.down) {
-                return
-            }
-            else if (event.key === arrow.right) {
-                border(buttons.bottom1, borderStyle.none)
-                border(buttons.bottom2, borderStyle.solid)
-            }
-            else if (event.key === arrow.left) {
-                return
-            }
-            else if (event.key === arrow.up) {
-                border(buttons.bottom1, borderStyle.none)
-                border(buttons.middle1, borderStyle.solid)
-            }
-            else return
-        }
     }
 }
 function moveFromBottom2(buttons, event, tmpKeydown) {
@@ -374,33 +185,6 @@ function moveFromBottom2(buttons, event, tmpKeydown) {
         }
         else return
     }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            return
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            border(buttons.bottom2, borderStyle.none)
-            border(buttons.middle2, borderStyle.solid)
-        }
-        else {
-            if (event.key === arrow.down) {
-                return
-            }
-            else if (event.key === arrow.right) {
-                border(buttons.bottom2, borderStyle.none)
-                border(buttons.bottom3, borderStyle.solid)
-            }
-            else if (event.key === arrow.left) {
-                border(buttons.bottom2, borderStyle.none)
-                border(buttons.bottom1, borderStyle.solid)
-            }
-            else if (event.key === arrow.up) {
-                border(buttons.bottom2, borderStyle.none)
-                border(buttons.middle2, borderStyle.solid)
-            }
-            else return
-        }
-    }
 }
 function moveFromBottom3(buttons, event, tmpKeydown) {
     if (tmpKeydown.length === 1) {
@@ -410,7 +194,7 @@ function moveFromBottom3(buttons, event, tmpKeydown) {
         }
         else if (event.key === arrow.right) {
             border(buttons.bottom3, borderStyle.none)
-            border(buttons.bottom1, borderStyle.solid)
+            border(buttons.top1, borderStyle.solid)
         }
         else if (event.key === arrow.left) {
             border(buttons.bottom3, borderStyle.none)
@@ -421,32 +205,6 @@ function moveFromBottom3(buttons, event, tmpKeydown) {
             border(buttons.middle3, borderStyle.solid)
         }
         else return
-    }
-    if (tmpKeydown.length === 2) {
-        if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.right)) {
-            return
-        }
-        else if (pressKeyAndOtherKey(tmpKeydown, 'Enter', arrow.left)) {
-            border(buttons.bottom3, borderStyle.none)
-            border(buttons.middle3, borderStyle.solid)
-        }
-        else {
-            if (event.key === arrow.down) {
-                return
-            }
-            else if (event.key === arrow.right) {
-                return
-            }
-            else if (event.key === arrow.left) {
-                border(buttons.bottom3, borderStyle.none)
-                border(buttons.bottom2, borderStyle.solid)
-            }
-            else if (event.key === arrow.up) {
-                border(buttons.bottom3, borderStyle.none)
-                border(buttons.middle3, borderStyle.solid)
-            }
-            else return
-        }
     }
 }
 function getBorderStyle(element) {

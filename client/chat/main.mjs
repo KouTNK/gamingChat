@@ -3,6 +3,7 @@ import { receiveTextEvent, submitTextEvent, getP_ID, createChatText } from '../.
 import { flashScreenAndRemoveElement, createFlashScreenOfElement } from '../../modules/flash_screen.mjs'
 import { registerUserName } from '../../modules/user.mjs'
 import { takeMessageLog, getTimeStamp } from '../../modules/log.mjs'
+import { getDeviceType } from '../../modules/responsive.mjs'
 // import { takeMessageLog } from '../../modules/log.mjs'
 const socket = io.connect(`http://${location.host}/chat_app/chat`)
 //ボタンの配置
@@ -243,6 +244,18 @@ function submitInputTextForTextarea(tag, currentID, newID, text, element, userna
     socket.emit('send message log', log)
 }
 
+document.getElementById(className.textarea).addEventListener("focusin", function (event) {
+    console.log(event.target)
+    if (getDeviceType() === "smartphone") {
+
+    }
+})
+document.getElementById(className.textarea).addEventListener("focusout", function (event) {
+    console.log(event.target)
+    if (getDeviceType() === "smartphone") {
+
+    }
+})
 //エンターキーを押すとonclickのイベントも発動してしまうため、
 //エンターキーの場合はclickEventが発動しないようにした。
 //もっといい書き方があるかもしれないので、今後調べる。
@@ -290,7 +303,7 @@ window.addEventListener('keyup', event => {
     //エンターキーを押してすぐ離した場合のみclickEventを発動する。
     //エンターキーを長押しした場合、間違って押した可能性があり、clickEventを発動しないようにした。
     //他のキーと同時押しでエンターキーを押した場合も間違いの可能性があるため、clickEventを発動しないようにした。
-    if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit) {
+    if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit && event.target.id !== "textarea") {
         const position = findBorderButton(buttons, borderStyle.solid)
         clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, buttons[position].value, chat, username, position)
     }
