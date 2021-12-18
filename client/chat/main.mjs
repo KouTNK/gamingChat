@@ -321,20 +321,23 @@ window.addEventListener('keydown', event => {
     //エンターキー以外のキーを長押ししている時、送信できないようにする。
     if (event.key !== 'Enter') isSubmit = false
     const position = findBorderButton(buttons, borderStyle.solid)
-    if (position === buttonsPotision.top1) moveFromTop1(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.top2) moveFromTop2(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.top3) moveFromTop3(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.middle1) moveFromMiddle1(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.middle2) moveFromMiddle2(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.middle3) moveFromMiddle3(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.bottom1) moveFromBottom1(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.bottom2) moveFromBottom2(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.bottom3) moveFromBottom3(buttons, event, tmpKeydown)
+    if (position === buttonsPotision.top1 && isNotEventTargetId(event, "textarea")) moveFromTop1(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.top2 && isNotEventTargetId(event, "textarea")) moveFromTop2(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.top3 && isNotEventTargetId(event, "textarea")) moveFromTop3(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.middle1 && isNotEventTargetId(event, "textarea")) moveFromMiddle1(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.middle2 && isNotEventTargetId(event, "textarea")) moveFromMiddle2(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.middle3 && isNotEventTargetId(event, "textarea")) moveFromMiddle3(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.bottom1 && isNotEventTargetId(event, "textarea")) moveFromBottom1(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.bottom2 && isNotEventTargetId(event, "textarea")) moveFromBottom2(buttons, event, tmpKeydown)
+    else if (position === buttonsPotision.bottom3 && isNotEventTargetId(event, "textarea")) moveFromBottom3(buttons, event, tmpKeydown)
 
     const text = document.getElementById(position).innerText
     const log = takeMessageLog(getTimeStamp(), username, text, event.key, position)
     socket.emit('send message log', log)
 })
+function isNotEventTargetId(event, id) {
+    return event.target.id !== id
+}
 function isDuplicateKey(tmpKeydown, event) {
     for (const key of tmpKeydown) {
         if (key === event.key) return true
