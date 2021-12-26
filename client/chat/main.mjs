@@ -215,14 +215,15 @@ const className = {
     textarea: "textarea",
     submitButton: "submitButton"
 }
-
+const MY_TEXT_BACKGROUND_COLOR = "rgb(38, 50, 56)"
 window.addEventListener('load', () => {
     socket.emit('check your connection')
     border(buttons.middle2, borderStyle.solid)
 })
-function clickEvent(tag, currentID, newID, text, element, username, position) {
+
+function clickEvent(tag, currentID, newID, text, element, username, position, backgroundColor) {
     const chatText = createChatText(username, className.username, text, className.chatText)
-    submitTextEvent(tag, newID, chatText, element, className.chatFrame)
+    submitTextEvent(tag, newID, chatText, element, className.chatFrame, backgroundColor)
     socket.emit('submit text', { tag, currentID, newID, chatText })
     const log = takeMessageLog(getTimeStamp(), username, text, "Click", position)
     socket.emit('send message log', log)
@@ -231,13 +232,13 @@ function clickEvent(tag, currentID, newID, text, element, username, position) {
 document.getElementById(className.submitButton).onclick = (event) => {
     const textarea = document.getElementById(className.textarea)
     const inputText = textarea.innerText
-    submitInputTextForTextarea('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, inputText, chat, username)
+    submitInputTextForTextarea('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, inputText, chat, username, MY_TEXT_BACKGROUND_COLOR)
     textarea.innerText = ""
 }
 
-function submitInputTextForTextarea(tag, currentID, newID, text, element, username) {
+function submitInputTextForTextarea(tag, currentID, newID, text, element, username, backgroundColor) {
     const chatText = createChatText(username, className.username, text, className.chatText)
-    submitTextEvent(tag, newID, chatText, element, className.chatFrame)
+    submitTextEvent(tag, newID, chatText, element, className.chatFrame, backgroundColor)
     socket.emit('submit text', { tag, currentID, newID, chatText })
     const position = "input"
     const log = takeMessageLog(getTimeStamp(), username, text, "Click", position)
@@ -264,39 +265,39 @@ function cancelKeydownEvent(tmpKeydown) {
 }
 buttons.top1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top1)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top1, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.top2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top2)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top2, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.top3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top3)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top3, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.middle1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle1)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle1, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.middle2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle2)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle2, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.middle3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle3)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.middle3, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.bottom1.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom1)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom1, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.bottom2.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom2)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom2, MY_TEXT_BACKGROUND_COLOR)
 }
 buttons.bottom3.onclick = (event) => {
     if (cancelKeydownEvent(tmpKeydown)) return
-    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom3)
+    else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.bottom3, MY_TEXT_BACKGROUND_COLOR)
 }
 let isSubmit = true
 window.addEventListener('keyup', event => {
@@ -305,7 +306,7 @@ window.addEventListener('keyup', event => {
     //他のキーと同時押しでエンターキーを押した場合も間違いの可能性があるため、clickEventを発動しないようにした。
     if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit && event.target.id !== "textarea") {
         const position = findBorderButton(buttons, borderStyle.solid)
-        clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, buttons[position].value, chat, username, position)
+        clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, buttons[position].value, chat, username, position, MY_TEXT_BACKGROUND_COLOR)
     }
     //キーを離した時、離したキーを配列から削除する。
     tmpKeydown = tmpKeydown.filter(key => key !== event.key)

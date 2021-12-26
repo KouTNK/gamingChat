@@ -37,16 +37,16 @@ function logSwipeEnd(event) {
         }
     }
 }
-// function setTextOfTheButton(button, text) {
-//     button.innerHTML = text
-//     button.value = text
-// }
+function setTextOfTheButton(button, text) {
+    button.innerHTML = text
+    button.value = text
+}
 // for in か for of　か　for のどれがいいか？またはボタンとテキストの書き方を変えるか？
-// function setTextOfTheButtons(buttons, texts) {
-//     for (let button of buttons) {
-//         setTextOfTheButton(button, texts[button])
-//     }
-// }
+function setTextOfTheButtons(buttons, texts) {
+    for (let i = 0; i < buttons.length; i++) {
+        setTextOfTheButton(button[i], texts[i])
+    }
+}
 function defaultButtons() {
     buttons.top1.innerHTML = '家を作る！'
     buttons.top1.value = '家を作る！'
@@ -106,4 +106,18 @@ function rightButtons() {
     buttons.bottom2.value = 'チェストを置く！'
     buttons.bottom3.innerHTML = '倒すな！'
     buttons.bottom3.value = '倒すな！'
+}
+
+function test() {
+    const texts = {
+        top1: '家を作る！',
+        top2: '木を集める！',
+        top3: '石を集める！',
+        middle1: '敵を倒す！',
+        middle2: '助けて！死にそう！',
+        middle3: 'X軸、Y軸、Z軸教えて！',
+        bottom1: '迷った！,',
+        bottom2: '修理する！',
+        bottom3: '一緒に来て！',
+    }
 }

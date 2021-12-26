@@ -16,15 +16,16 @@ function receiveTextEvent(tag, newID, text, element, className) {
     appendText(tag, newID, text, element, className)
     plusP_ID()
 }
-function submitTextEvent(tag, newID, text, element, className) {
-    appendText(tag, newID, text, element, className)
+function submitTextEvent(tag, newID, text, element, className, backgroundColor) {
+    appendText(tag, newID, text, element, className, backgroundColor)
     plusP_ID()
 }
-function appendText(tag, newID, text, element, className) {
+function appendText(tag, newID, text, element, className, backgroundColor) {
     const newTag = document.createElement(tag)
     newTag.id = newID
     newTag.innerHTML = text
     newTag.className = className
+    newTag.style.backgroundColor = backgroundColor
     element.prepend(newTag)
 }
 function changeFontSizeOfFirstTextInTheChildNode(element, fontSize) {
