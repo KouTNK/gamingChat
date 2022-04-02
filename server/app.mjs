@@ -38,13 +38,19 @@ app.use(express.static(mainPath))
 const chatPath = `${mainPath}/client/chat/index.html`
 const monitoringPath = `${mainPath}/client/monitoring/index.html`
 const gamingChatPath = `${mainPath}/client/hp/index.html`
+const ejsFiles = {
+  chat:"chat.ejs",
+  hp:"hp.ejs"
+}
 app.get('/gaming_chat/minecraft', function (req, res) {
   console.log(req.url)
-  res.sendFile(chatPath)
+  // res.sendFile(chatPath)
+  res.render(ejsFiles.chat)
 })
 app.get('/gaming_chat/apex_legends', function (req, res) {
   console.log(req.url)
-  res.sendFile(chatPath)
+  // res.sendFile(chatPath)
+  res.render(ejsFiles.chat)
 })
 app.get('/monitoring', function (req, res) {
   console.log(req.url)
@@ -52,7 +58,8 @@ app.get('/monitoring', function (req, res) {
 })
 app.get('/', function (req, res) {
   console.log(req.url)
-  res.sendFile(gamingChatPath)
+  // res.sendFile(gamingChatPath)
+  res.render(ejsFiles.hp)
 })
 const io = new Server(httpServer)
 client(io)

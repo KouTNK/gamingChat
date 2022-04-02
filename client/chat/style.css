@@ -2,6 +2,8 @@ body {
     background-color: rgb(30, 30, 30);
     overflow: hidden;
     margin: 0;
+    -webkit-touch-callout: none;
+    user-select: none;
 }
 
 .chat {
@@ -79,7 +81,7 @@ body {
     color: white;
     font-size: 24px;
     overflow: auto;
-    height:72px;
+    height: 72px;
     line-height: 36px;
 }
 

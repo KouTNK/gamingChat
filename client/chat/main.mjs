@@ -22,6 +22,10 @@ const buttons = {
     bottom3: document.getElementById('bottom3'),
 }
 const chat = document.getElementById('chat')
+chat.addEventListener('touchstart', function (event) {
+    falseContentEditable(event.target, buttons)
+    falseIsContentEditableTargetID()
+})
 const buttonsDiv = document.getElementById('buttons')
 buttonsDiv.addEventListener('touchmove', logSwipe)
 buttonsDiv.addEventListener('touchstart', logSwipeStart)
@@ -29,8 +33,10 @@ buttonsDiv.addEventListener('touchend', logSwipeEnd)
 let startX
 let endX
 function logSwipeStart(event) {
+    console.log("touchstart logswipe")
     startX = event.touches[0].pageX
     endX = undefined
+    falseContentEditable(event.target, buttons)
 }
 function logSwipe(event) {
     event.preventDefault()
@@ -43,7 +49,7 @@ const chatSet = {
 }
 let currentChatSet = chatSet.default
 function logSwipeEnd(event) {
-    console.log('endX:' + endX, 'startX:' + startX, 'endX-startX:' + (endX - startX))
+    // console.log('endX:' + endX, 'startX:' + startX, 'endX-startX:' + (endX - startX))
     if (-70 < (endX - startX)) {
         if (chatSet.default === currentChatSet) {
             currentChatSet = chatSet.left
@@ -188,7 +194,61 @@ function logSwipeEnd(event) {
     }
 }
 
+let longTouchTimer, longTouchCount
+function isLongTouchStart(event) {
+    longTouchCount = 0
+    longTouchTimer = setInterval(() => {
+        longTouchCount++
+    }, 10)
+    console.log("touch start")
+}
+let IsTrueContentEditableTargetID
+function isLongTouchEnd(event) {
+    clearInterval(longTouchTimer)
+    if (longTouchCount >= 50) {
+        event.target.contentEditable = "true"
+        IsTrueContentEditableTargetID = event.target.id
+    }
+    falseContentEditable(event.target, buttons, IsTrueContentEditableTargetID)
 
+    console.log("touch end", longTouchCount)
+}
+
+buttons.top1.addEventListener('touchstart', isLongTouchStart)
+buttons.top2.addEventListener('touchstart', isLongTouchStart)
+buttons.top3.addEventListener('touchstart', isLongTouchStart)
+buttons.middle1.addEventListener('touchstart', isLongTouchStart)
+buttons.middle2.addEventListener('touchstart', isLongTouchStart)
+buttons.middle3.addEventListener('touchstart', isLongTouchStart)
+buttons.bottom1.addEventListener('touchstart', isLongTouchStart)
+buttons.bottom2.addEventListener('touchstart', isLongTouchStart)
+buttons.bottom3.addEventListener('touchstart', isLongTouchStart)
+buttons.top1.addEventListener('touchend', isLongTouchEnd)
+buttons.top2.addEventListener('touchend', isLongTouchEnd)
+buttons.top3.addEventListener('touchend', isLongTouchEnd)
+buttons.middle1.addEventListener('touchend', isLongTouchEnd)
+buttons.middle2.addEventListener('touchend', isLongTouchEnd)
+buttons.middle3.addEventListener('touchend', isLongTouchEnd)
+buttons.bottom1.addEventListener('touchend', isLongTouchEnd)
+buttons.bottom2.addEventListener('touchend', isLongTouchEnd)
+buttons.bottom3.addEventListener('touchend', isLongTouchEnd)
+buttons.top1.addEventListener('keyup', function (event) {
+    if (event.key === "Enter") {
+        console.log("Enter")
+    }
+})
+
+function falseContentEditable(target, buttons) {
+    if (target !== buttons.top1) buttons.top1.contentEditable = "false"
+    if (target !== buttons.top2) buttons.top2.contentEditable = "false"
+    if (target !== buttons.top3) buttons.top3.contentEditable = "false"
+    if (target !== buttons.middle1) buttons.middle1.contentEditable = "false"
+    if (target !== buttons.middle2) buttons.middle2.contentEditable = "false"
+    if (target !== buttons.middle3) buttons.middle3.contentEditable = "false"
+    if (target !== buttons.bottom1) buttons.bottom1.contentEditable = "false"
+    if (target !== buttons.bottom2) buttons.bottom2.contentEditable = "false"
+    if (target !== buttons.bottom3) buttons.bottom3.contentEditable = "false"
+}
 const buttonsPotision = {
     top1: 'top1',
     top2: 'top2',
@@ -220,8 +280,13 @@ window.addEventListener('load', () => {
     socket.emit('check your connection')
     border(buttons.middle2, borderStyle.solid)
 })
-
+const falseIsContentEditableTargetID = () => IsTrueContentEditableTargetID = ""
 function clickEvent(tag, currentID, newID, text, element, username, position, backgroundColor) {
+    if (IsTrueContentEditableTargetID === position) {
+        console.log("clickEvent", IsTrueContentEditableTargetID)
+        return
+    }
+    else falseIsContentEditableTargetID
     const chatText = createChatText(username, className.username, text, className.chatText)
     submitTextEvent(tag, newID, chatText, element, className.chatFrame, backgroundColor)
     socket.emit('submit text', { tag, currentID, newID, chatText })
@@ -264,6 +329,7 @@ function cancelKeydownEvent(tmpKeydown) {
     return tmpKeydown.length !== 0
 }
 buttons.top1.onclick = (event) => {
+    console.log("onclick")
     if (cancelKeydownEvent(tmpKeydown)) return
     else clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, event.target.value, chat, username, buttonsPotision.top1, MY_TEXT_BACKGROUND_COLOR)
 }
@@ -304,9 +370,15 @@ window.addEventListener('keyup', event => {
     //エンターキーを押してすぐ離した場合のみclickEventを発動する。
     //エンターキーを長押しした場合、間違って押した可能性があり、clickEventを発動しないようにした。
     //他のキーと同時押しでエンターキーを押した場合も間違いの可能性があるため、clickEventを発動しないようにした。
-    if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit && event.target.id !== "textarea") {
+    if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit && event.target.id !== "textarea" && !IsTrueContentEditableTargetID) {
         const position = findBorderButton(buttons, borderStyle.solid)
         clickEvent('p', `p${getP_ID() - 1}`, `p${getP_ID()}`, buttons[position].value, chat, username, position, MY_TEXT_BACKGROUND_COLOR)
+    }
+    else if (event.key === 'Enter' && tmpKeydown.length === 1 && isSubmit && event.target.id !== "textarea" && IsTrueContentEditableTargetID) {
+        const button = document.getElementById(IsTrueContentEditableTargetID)
+        button.value = button.innerText
+        falseIsContentEditableTargetID()
+        button.contentEditable = false
     }
     //キーを離した時、離したキーを配列から削除する。
     tmpKeydown = tmpKeydown.filter(key => key !== event.key)
@@ -321,17 +393,19 @@ window.addEventListener('keydown', event => {
     if (!isDuplicateKey(tmpKeydown, event)) tmpKeydown.push(event.key)
     //エンターキー以外のキーを長押ししている時、送信できないようにする。
     if (event.key !== 'Enter') isSubmit = false
+    
     const position = findBorderButton(buttons, borderStyle.solid)
-    if (position === buttonsPotision.top1 && isNotEventTargetId(event, "textarea")) moveFromTop1(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.top2 && isNotEventTargetId(event, "textarea")) moveFromTop2(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.top3 && isNotEventTargetId(event, "textarea")) moveFromTop3(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.middle1 && isNotEventTargetId(event, "textarea")) moveFromMiddle1(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.middle2 && isNotEventTargetId(event, "textarea")) moveFromMiddle2(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.middle3 && isNotEventTargetId(event, "textarea")) moveFromMiddle3(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.bottom1 && isNotEventTargetId(event, "textarea")) moveFromBottom1(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.bottom2 && isNotEventTargetId(event, "textarea")) moveFromBottom2(buttons, event, tmpKeydown)
-    else if (position === buttonsPotision.bottom3 && isNotEventTargetId(event, "textarea")) moveFromBottom3(buttons, event, tmpKeydown)
-
+    if (isNotEventTargetId(event, "textarea") && !IsTrueContentEditableTargetID) {
+        if (position === buttonsPotision.top1) moveFromTop1(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.top2) moveFromTop2(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.top3) moveFromTop3(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.middle1) moveFromMiddle1(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.middle2) moveFromMiddle2(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.middle3) moveFromMiddle3(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.bottom1) moveFromBottom1(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.bottom2) moveFromBottom2(buttons, event, tmpKeydown)
+        else if (position === buttonsPotision.bottom3) moveFromBottom3(buttons, event, tmpKeydown)
+    }
     const text = document.getElementById(position).innerText
     const log = takeMessageLog(getTimeStamp(), username, text, event.key, position)
     socket.emit('send message log', log)
