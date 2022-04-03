@@ -1,3 +1,4 @@
+import fs from "fs"
 let id = 0
 export default function (io) {
     const chat = io
@@ -33,5 +34,16 @@ export default function (io) {
                     console.error(err)
                 }
             })
+        })
+    const hp = io
+        .of('/chat_app/hp')
+        .on('connection',function(socket){
+            try{
+                const chatsetJSONobject = JSON.parse(fs.readFileSync('./server/chatset.json', 'utf8'))
+                socket.emit('send chatset data',chatsetJSONobject)
+            }
+            catch(err){
+                console.error(err)
+            }
         })
 }

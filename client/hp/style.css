@@ -11,3 +11,14 @@ body * {
 a {
     font-size: 24px;
 }
+
+select.chatset {
+    font-size:24px;
+    color:white;
+    background-color: rgb(60, 60, 60);
+}
+option{
+    font-size:24px;
+    color:white;
+    background-color: rgb(60,60,60);
+}
