@@ -1,0 +1,31 @@
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/client/chat/style.css">
+        <script type="module" src="/client/chat/main.mjs"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <title>定型文チャット</title>
+    </head>
+
+    <body>
+        <div id="chat" class="chat"></div>
+        <div id="buttons" class="buttons">
+            <button id="top1" class="text_button" value='家を作る！'>家を作る！</button>
+            <button id="top2" class="text_button" value='木を集める！'>木を集める！</button>
+            <button id="top3" class="text_button" value='石を集める！'>石を集める！</button>
+            <button id="middle1" class="text_button" value='敵を倒す！'>敵を倒す！</button>
+            <button id="middle2" class="text_button" value='助けて！死にそう！'>助けて！死にそう！</button>
+            <button id="middle3" class="text_button" value='X軸、Y軸、Z軸教えて！'>X軸、Y軸、Z軸教えて！</button>
+            <button id="bottom1" class="text_button" value='迷った！'>迷った！</button>
+            <button id="bottom2" class="text_button" value='修理する！'>修理する！</button>
+            <button id="bottom3" class="text_button" value='一緒に来て！'>一緒に来て！</button>
+        </div>
+        <div id="inputText" class="inputText">
+            <div id="textarea" class="textarea" contenteditable="true"></div>
+            <div id="submitButton" class="submitButton">送信</div>
+        </div>
+    </body>
+
+</html>
